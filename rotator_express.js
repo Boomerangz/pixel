@@ -103,7 +103,9 @@ function pixel(req, res) {
       res.end(GifCode)
     else
       res.end(" ")
-    async(function() {logPixel(req)})
+    if (req.method=='GET') {
+      async(function() {logPixel(req)})
+    }
 }
 
 function logPixel(req) {
