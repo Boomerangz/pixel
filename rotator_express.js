@@ -131,7 +131,7 @@ function logPixel(req) {
 app.get('/', get_banner)
 app.get('/loaded/', banner_loaded)
 app.get('/link/', redirect_link)
-app.get('/p/:id([A-Z]+):extension(.gif|.js)', pixel)
+app.get('/p/:id([A-Z0-9]+):extension(.gif|.js)', pixel)
 
 function startServer() {
   var server = app.listen(1237)  
