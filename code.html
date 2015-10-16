@@ -1,0 +1,19 @@
+<html>
+<body>
+ <iframe id="idIframe" src="http://localhost:1237/?s=2" onload="iframeLoaded()">
+    Ваш браузер не поддерживает плавающие фреймы!
+ </iframe>
+</body>
+</html>
+<script type="text/javascript">
+  function iframeLoaded() {
+      var iFrameID = document.getElementById('idIframe');
+      if(iFrameID) {
+            // here you can make the height, I delete it first, then I make it again
+            iFrameID.height = "";
+            iFrameID.height = iFrameID.contentWindow.document.body.scrollHeight + "px";
+            iFrameID.width = "";
+            iFrameID.width = iFrameID.contentWindow.document.body.scrollWidth + "px";
+      }   
+  }
+</script>
