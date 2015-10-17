@@ -10,13 +10,17 @@ String.prototype.format = function() {
     return formatted;
 };
 
-const GifCode = "\x47\x49\x46\x38\x39\x61\x01\x00\x01\x00\x80\x00\x00\xff\xff\xff\x00\x00\x00\x2c\x00\x00\x00\x00\x01\x00\x01\x00\x00\x02\x02\x44\x01\x00\x3b"
+const GifCode = new Buffer([
+    0x47, 0x49, 0x46, 0x38, 0x39, 0x61, 0x01, 0x00, 0x01, 0x00, 
+    0x80, 0x00, 0x00, 0xff, 0xff, 0xff, 0x00, 0x00, 0x00, 0x2c, 
+    0x00, 0x00, 0x00, 0x00, 0x01, 0x00, 0x01, 0x00, 0x00, 0x02, 
+    0x02, 0x44, 0x01, 0x00, 0x3b]);
+
 var parser = require('ua-parser-js');
 var geoip = require('geoip-lite');
 var hostname='http://localhost:1237/'
 var express = require('express')
 var app = express()
-var sqlite3 = require('sqlite3').verbose();
 var pg = require('pg');
 var connectionString = process.env.DATABASE_URL || 'postgres://postgres@46.101.9.112:5445/postgres';
 var client = new pg.Client(connectionString);
@@ -99,9 +103,10 @@ function banner_loaded(req, res) {
   }
 
 function pixel(req, res) {
-    if (req.params.extension == ".gif")
-      res.end(GifCode)
-    else
+    if (req.params.extension == ".gif"){
+      res.send(GifCode, { 'Content-Type': 'image/gif' }, 200);
+      res.end()
+    } else
       res.end(" ")
     if (req.method=='GET') {
       async(function() {logPixel(req)})
@@ -130,9 +135,9 @@ function logPixel(req) {
 }
 
 // respond with "hello world" when a GET request is made to the homepage
-app.get('/', get_banner)
-app.get('/loaded/', banner_loaded)
-app.get('/link/', redirect_link)
+// app.get('/', get_banner)
+// app.get('/loaded/', banner_loaded)
+// app.get('/link/', redirect_link)
 app.get('/p/:id([A-Z0-9]+):extension(.gif|.js)', pixel)
 
 function startServer() {
