@@ -16,6 +16,7 @@ CREATE TABLE page_sessions_link
 ( id SERIAL NOT NULL PRIMARY KEY,
   created timestamp default now(),
   page_unique_code VARCHAR(20) NOT NULL,
+  local_user_id VARCHAR(20) NOT NULL,
   session_id VARCHAR(20),
   session_updated timestamp,
   os VARCHAR(20),

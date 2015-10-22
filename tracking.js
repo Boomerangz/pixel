@@ -69,6 +69,7 @@ function get_iframe(req, res) {
  	
     async(function() {logPage(session_id,local_id,global_id, page_id)})
     async(function() {log_session_id(session_id,page_id, req)})
+    async(function() {set_user_id_to_session(session_id,local_id)})
   }
 }
 
@@ -79,6 +80,14 @@ function logPage(session_id, local_id, global_id, page_id) {
   console.log(query_str)
   query = client.query(query_str);
 }
+
+function logPage(session_id,local_id) {
+  console.log(session_id, local_id, global_id, page_id)
+  query_str = "UPDATE page_sessions_link SET local_user_id=\'{0}\' WHERE session_id=\'{1}\'".format(local_id,session_id)
+  console.log(query_str)
+  query = client.query(query_str);
+}
+
 
 function session_time(req, res) {
 	session_id=req.query.session_id
