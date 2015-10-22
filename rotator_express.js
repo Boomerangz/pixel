@@ -24,6 +24,7 @@ var app = express()
 var pg = require('pg');
 var connectionString = process.env.DATABASE_URL || 'postgres://postgres@46.101.9.112:5445/postgres';
 var client = new pg.Client(connectionString);
+var tracking = require('./tracking.js');
 client.connect();
 
 
@@ -138,7 +139,12 @@ function logPixel(req) {
 // app.get('/', get_banner)
 // app.get('/loaded/', banner_loaded)
 // app.get('/link/', redirect_link)
+
 app.get('/p/:id([A-Z0-9]+):extension(.gif|.js)', pixel)
+app.get('/t/get_id/:id([A-Z0-9]+):extension(.js)', tracking.get_cookie)
+app.get('/t/ifr/:id([A-Z0-9]+):extension(.html)', tracking.get_iframe)
+app.get('/t/get_js/:id([A-Z0-9]+):extension(.js)', tracking.get_start_js)
+app.get('/t/session/', tracking.session_time)
 
 function startServer() {
   var server = app.listen(1237)  
