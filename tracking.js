@@ -62,7 +62,7 @@ function get_iframe(req, res) {
 	 	console.log("GLOBAL ID",global_id)
 	 	if (global_id==undefined) {
 	 		global_id=get_random_string(20)
-	 		cookies.set("userID_AdvertNetwork", global_id)
+	 		cookies.set("userID_AdvertNetwork", global_id, {maxAge:94608000})
 	 		console.log("NEW GLOBAL ID",global_id)
 	 	}
 	 	res.end("")
