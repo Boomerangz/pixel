@@ -123,12 +123,13 @@ function log_session_id(session_id,page_id, req) {
   os_version=ua['os']['version']
 
   var geo = geoip.lookup(ip_adr);
-  geo = JSON.stringify(geo)
 
   country = geo['country']
   city = geo['city']
 
-  query_str = "INSERT INTO page_sessions_link (page_unique_code,session_id,os, os_version, browser, browser_version, country, city) VALUES (\'{0}\',\'{1}\',\'{2}\',\'{3}\',\'{4}\',\'{5}\',\'{6}\',\'{7}\')".format(page_id,session_id,os,os_version,browser,browser_version,country,city)
+  console.log(JSON.stringify(geo))
+
+  query_str = "INSERT INTO page_sessions_link (page_unique_code,session_id,os, os_version, browser, browser_version, country, city, ip) VALUES (\'{0}\',\'{1}\',\'{2}\',\'{3}\',\'{4}\',\'{5}\',\'{6}\',\'{7}\', \'{8}\')".format(page_id,session_id,os,os_version,browser,browser_version,country,city, ip_adr)
   console.log(query_str)
   query = client.query(query_str);   
 }
