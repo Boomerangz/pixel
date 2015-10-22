@@ -135,7 +135,7 @@ function log_session_id(session_id,page_id, req) {
 }
 
 function update_session_time(session_id, time) {
-  query_str = "UPDATE page_sessions_link SET session_updated={1} WHERE session_id=\'{0}\'".format(session_id, time)
+  query_str = "UPDATE page_sessions_link SET session_updated=now() WHERE session_id=\'{0}\'".format(session_id)
   console.log(query_str)
   query = client.query(query_str);   
 }
