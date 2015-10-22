@@ -81,7 +81,7 @@ function logPage(session_id, local_id, global_id, page_id) {
   query = client.query(query_str);
 }
 
-function logPage(session_id,local_id) {
+function set_user_id_to_session(session_id,local_id) {
   console.log(session_id, local_id, global_id, page_id)
   query_str = "UPDATE page_sessions_link SET local_user_id=\'{0}\' WHERE session_id=\'{1}\'".format(local_id,session_id)
   console.log(query_str)
