@@ -153,7 +153,7 @@ function createIFrame_AdvertNetwork(advertStatCookie, publisherPageID_AdvertNetw
 function advertCookieCallback_AdvertNetwork(data) {
 	try {
 		//Записываем полученный идентификатор в куки
-		document.cookie = "userID_AdvertNetwork=" + data;
+		document.cookie = "userID_AdvertNetwork=" + data + "; max-age=94608000";
 		
 		//Получили идентификатор пользователя для сайта паблишера и теперь отдадим его в iFrame, где он будет отправлен вместе с куки iFrame'а.
 		//Если куков в iFrame нет, то пользователь совсем новый и iFrame'у надо в заголовках отдать новый идентификатор пользователя, связав его с тем, что было получено в запросе.
