@@ -113,6 +113,8 @@ module.exports.get_start_js = get_start_js;
 
 function log_session_id(session_id,page_id, req) {
   ip_adr = req.headers['x-forwarded-for'] || req.connection.remoteAddress;//req.connection.remoteAddress
+  console.log(req.headers['x-forwarded-for'])
+  console.log(req.connection.remoteAddress)
   // agent = req.headers['user-agent']
   // id=req.params.id
 
