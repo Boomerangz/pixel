@@ -49,7 +49,7 @@ document.addEventListener("DOMContentLoaded", function () {
 		if (advertStatCookie == undefined) {
 			//На сайте паблишера куков нет.
 			//Запрашиваем идентификатор пользователя для сайта паблишера
-			utils.sendRequest("http://px.adbox.kz:1237/t/get_id/"+publisherPageID_AdvertNetwork+".js?site_id=" + publisherPageID_AdvertNetwork + "&session_id=" + currentSessionID_AdvertNetwork);
+			utils.sendRequest("http://px.adbox.kz/t/get_id/"+publisherPageID_AdvertNetwork+".js?site_id=" + publisherPageID_AdvertNetwork + "&session_id=" + currentSessionID_AdvertNetwork);
 		} else {
 			//Идентификатор уже есть и скорее всего связан с идентификатором iFrame'а
 			createIFrame_AdvertNetwork(advertStatCookie, publisherPageID_AdvertNetwork, currentSessionID_AdvertNetwork, contentKeywords_AdvertNetwork, contentTitle_AdvertNetwork, searchQuery_AdvertNetwork, extraData_AdvertNetwork);
@@ -85,7 +85,7 @@ document.addEventListener("DOMContentLoaded", function () {
 	//Статистика по timeDiap (статистика сессии)
 	function sendDiapStat() {
 		calcUserTimer();
-		utils.sendRequest("http://px.adbox.kz:1237/t/session" +
+		utils.sendRequest("http://px.adbox.kz/t/session" +
 			"?site_id=" + publisherPageID_AdvertNetwork +
 			"&session_id=" + currentSessionID_AdvertNetwork +
 			"&time_diap=" + Math.floor(timeDiap[timeDiapIndex] / 1000) +
@@ -130,7 +130,7 @@ function createIFrame_AdvertNetwork(advertStatCookie, publisherPageID_AdvertNetw
 	
 		iframe.id = "advertStatIFrame" + Math.ceil(Math.random() * 1000);
 		
-		iframe.src = "http://px.adbox.kz:1237/t/ifr/" +publisherPageID_AdvertNetwork+".html"+
+		iframe.src = "http://px.adbox.kz/t/ifr/" +publisherPageID_AdvertNetwork+".html"+
 			"?local_id=" + advertStatCookie +
 			"&site_id=" + publisherPageID_AdvertNetwork +
 			"&session_id=" + currentSessionID_AdvertNetwork +
