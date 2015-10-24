@@ -147,11 +147,14 @@ app.get('/t/get_js/:id([A-Z0-9]+):extension(.js)', tracking.get_start_js)
 app.get('/t/session/', tracking.session_time)
 
 function startServer() {
-  var server = app.listen(1237)  
+  var server = app.listen(8080)  
 }
 
+var path = require('path');
+template_path=path.join(__dirname, 'template.html')
+
 var fs = require('fs');
-fs.readFile('./template.html', function (err, data) {
+fs.readFile(template_path, function (err, data) {
   if (err) {
     throw err;
   }

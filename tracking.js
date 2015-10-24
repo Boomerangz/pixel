@@ -1,5 +1,6 @@
+var path = require('path');
 var pg = require('pg');
-var connectionString = process.env.DATABASE_URL || 'postgres://postgres@46.101.9.112:5445/postgres';
+var connectionString = process.env.DATABASE_URL || 'postgres://postgres@px.adbox.kz:5445/postgres';
 var client = new pg.Client(connectionString);
 client.connect();
 
@@ -111,7 +112,7 @@ module.exports.get_start_js = get_start_js;
 
 
 function log_session_id(session_id,page_id, req) {
-  ip_adr = req.connection.remoteAddress
+  ip_adr = req.headers['x-forwarded-for'] || req.connection.remoteAddress;//req.connection.remoteAddress
   // agent = req.headers['user-agent']
   // id=req.params.id
 
@@ -124,9 +125,13 @@ function log_session_id(session_id,page_id, req) {
 
   var geo = geoip.lookup(ip_adr);
 
+  try {
   country = geo['country']
   city = geo['city']
-
+  } catch (ex) {
+  country = ""
+  city = ""
+  }
   console.log(JSON.stringify(geo))
 
   query_str = "INSERT INTO page_sessions_link (page_unique_code,session_id,os, os_version, browser, browser_version, country, city, ip) VALUES (\'{0}\',\'{1}\',\'{2}\',\'{3}\',\'{4}\',\'{5}\',\'{6}\',\'{7}\', \'{8}\')".format(page_id,session_id,os,os_version,browser,browser_version,country,city, ip_adr)
@@ -140,9 +145,9 @@ function update_session_time(session_id, time) {
   query = client.query(query_str);   
 }
 
-
+path_to_template=path.join(__dirname, 'start.js')
 var fs = require('fs');
-fs.readFile('./start.js', function (err, data) {
+fs.readFile(path_to_template, function (err, data) {
   if (err) {
     throw err;
   }
