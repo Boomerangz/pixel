@@ -127,7 +127,7 @@ startTracking_AdvertNetwork = function () {
 		
 	}
 
-});
+};
 
 //iFrame с куками нашей сетки.
 function createIFrame_AdvertNetwork(advertStatCookie, publisherPageID_AdvertNetwork, currentSessionID_AdvertNetwork, contentKeywords_AdvertNetwork, contentTitle_AdvertNetwork, searchQuery_AdvertNetwork, extraData_AdvertNetwork) {
