@@ -15,7 +15,13 @@ var userFocusTimer_AdvertNetwork = 0; //Для отправки
 //Запуск таймера для подсчёта активности
 TimerUtil_AdvertNetwork(0);
 
-document.addEventListener("DOMContentLoaded", function () {
+if (document.body) {
+	startTracking_AdvertNetwork();
+} else {
+	document.addEventListener("DOMContentLoaded", startTracking_AdvertNetwork);
+}
+
+startTracking_AdvertNetwork = function () {
 	
 	var timeDiap = [10000, 30000, 60000, 300000, 900000, 1800000, 3600000, 5400000, 7200000]; //Промежутки времени для отправки идентификатора сессии. Позволит примерно понимать длительность пребывания на сайте.
 	
@@ -88,7 +94,6 @@ document.addEventListener("DOMContentLoaded", function () {
 		utils.sendRequest("http://px.adbox.kz/t/session" +
 			"?site_id=" + publisherPageID_AdvertNetwork +
 			"&session_id=" + currentSessionID_AdvertNetwork +
-			"&time_diap=" + Math.floor(timeDiap[timeDiapIndex] / 1000) +
 			"&time_active=" + Math.floor(userFocusTimer_AdvertNetwork / 1000)
 			);
 		if (timeDiapIndex + 1 < timeDiap.length) {
@@ -134,10 +139,10 @@ function createIFrame_AdvertNetwork(advertStatCookie, publisherPageID_AdvertNetw
 			"?local_id=" + advertStatCookie +
 			"&site_id=" + publisherPageID_AdvertNetwork +
 			"&session_id=" + currentSessionID_AdvertNetwork +
-			"&site_keywords" + contentKeywords_AdvertNetwork +
-			"&site_titile" + contentTitle_AdvertNetwork +
-			"&search_query" + searchQuery_AdvertNetwork +
-			"&extra_data" + extraData_AdvertNetwork;
+			"&site_keywords=" + contentKeywords_AdvertNetwork +
+			"&site_titile=" + contentTitle_AdvertNetwork +
+			"&search_query=" + searchQuery_AdvertNetwork +
+			"&extra_data=" + extraData_AdvertNetwork;
 			
 		iframe.style.position = "absolute";
 		iframe.style.opacity = 0;
