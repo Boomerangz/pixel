@@ -21,7 +21,7 @@ if (document.body) {
 	document.addEventListener("DOMContentLoaded", startTracking_AdvertNetwork);
 }
 
-startTracking_AdvertNetwork = function () {
+function startTracking_AdvertNetwork() {
 	
 	var timeDiap = [10000, 30000, 60000, 300000, 900000, 1800000, 3600000, 5400000, 7200000]; //Промежутки времени для отправки идентификатора сессии. Позволит примерно понимать длительность пребывания на сайте.
 	
