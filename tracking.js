@@ -92,9 +92,11 @@ function set_user_id_to_session(session_id,local_id) {
 
 function session_time(req, res) {
 	session_id=req.query.session_id
+  time_active=req.query.time_active
 	console.log(session_id)
 	res.end("")
-  async(function(){update_session_time(session_id,Date.now())})
+
+  async(function(){update_session_time(session_id,Date.now(),time_active)})
 }
 
 function get_start_js(req, res) {	
@@ -136,13 +138,16 @@ function log_session_id(session_id,page_id, req) {
   }
   console.log(JSON.stringify(geo))
 
-  query_str = "INSERT INTO page_sessions_link (page_unique_code,session_id,os, os_version, browser, browser_version, country, city, ip) VALUES (\'{0}\',\'{1}\',\'{2}\',\'{3}\',\'{4}\',\'{5}\',\'{6}\',\'{7}\', \'{8}\')".format(page_id,session_id,os,os_version,browser,browser_version,country,city, ip_adr)
+  query_str = "INSERT INTO page_sessions_link "+
+  "(page_unique_code,session_id,os, os_version, browser, browser_version, country, city, ip) "+
+  "SELECT \'{0}\',\'{1}\',\'{2}\',\'{3}\',\'{4}\',\'{5}\',\'{6}\',\'{7}\', \'{8}\' "+
+  "WHERE NOT EXISTS (SELECT id FROM page_sessions_link WHERE session_id=\'{1}\')".format(page_id,session_id,os,os_version,browser,browser_version,country,city, ip_adr)
   console.log(query_str)
   query = client.query(query_str);   
 }
 
-function update_session_time(session_id, time) {
-  query_str = "UPDATE page_sessions_link SET session_updated=now() WHERE session_id=\'{0}\'".format(session_id)
+function update_session_time(session_id, time) {  
+  query_str = "UPDATE page_sessions_link SET session_updated=now(), active_time={1} WHERE session_id=\'{0}\'".format(session_id,time_active)
   console.log(query_str)
   query = client.query(query_str);   
 }
