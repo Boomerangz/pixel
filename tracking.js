@@ -138,10 +138,10 @@ function log_session_id(session_id,page_id, req) {
   }
   console.log(JSON.stringify(geo))
 
-  query_str = "INSERT INTO page_sessions_link "+
+  query_str = ("INSERT INTO page_sessions_link "+
   "(page_unique_code,session_id,os, os_version, browser, browser_version, country, city, ip) "+
   "SELECT \'{0}\',\'{1}\',\'{2}\',\'{3}\',\'{4}\',\'{5}\',\'{6}\',\'{7}\', \'{8}\' "+
-  "WHERE NOT EXISTS (SELECT id FROM page_sessions_link WHERE session_id=\'{1}\')".format(page_id,session_id,os,os_version,browser,browser_version,country,city, ip_adr)
+  "WHERE NOT EXISTS (SELECT id FROM page_sessions_link WHERE session_id=\'{1}\')").format(page_id,session_id,os,os_version,browser,browser_version,country,city, ip_adr)
   console.log(query_str)
   query = client.query(query_str);   
 }
