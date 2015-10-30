@@ -81,7 +81,13 @@ function get_iframe(req, res) {
    {
     str = new Buffer(str, 'base64').toString('utf8')
     console.log(str)
-    query = JSON.parse(str)
+    try {
+      query = JSON.parse(str)
+    } catch (ex)
+    {
+      console.log(ex)
+      query = {}
+    }
    }
    local_id=query['localID']
    session_id=query['sessionID']
