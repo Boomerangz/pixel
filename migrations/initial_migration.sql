@@ -13,7 +13,8 @@ geo text);
 
 
 CREATE TABLE page_sessions_link
-( id SERIAL NOT NULL PRIMARY KEY,
+(
+  id SERIAL NOT NULL PRIMARY KEY,
   created timestamp default now(),
   page_unique_code VARCHAR(20) NOT NULL,
   local_user_id VARCHAR(20) NOT NULL,
@@ -25,7 +26,9 @@ CREATE TABLE page_sessions_link
   browser_version VARCHAR(20),
   country VARCHAR(20),
   city VARCHAR(100),
-  ip VARCHAR(40)
+  ip VARCHAR(40),
+  url VARCHAR(255),
+  extra_data TEXT
 );
 
 CREATE TABLE localid_site_link
@@ -34,4 +37,23 @@ CREATE TABLE localid_site_link
   site_id integer NOT NULL,
   local_user_id VARCHAR(20),  
   global_user_id VARCHAR(20)
+);
+
+
+
+CREATE TABLE user_keywords
+(
+  id SERIAL NOT NULL PRIMARY KEY,
+  created timestamp default now(),
+  global_user_id VARCHAR(20),
+  keyword VARCHAR(200)
+);
+
+
+CREATE TABLE user_categories
+(
+  id SERIAL NOT NULL PRIMARY KEY,
+  created timestamp default now(),
+  global_user_id VARCHAR(20),
+  keyword VARCHAR(200)
 );
