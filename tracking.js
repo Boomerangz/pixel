@@ -83,8 +83,8 @@ function get_iframe(req, res) {
     console.log(str)
     query = JSON.parse(str)
    }
-   local_id=query['local_id']
-   session_id=query['session_id']
+   local_id=query['localID']
+   session_id=query['sessionID']
 
    global_id=cookies.get("userID_AdvertNetwork")
 
@@ -145,8 +145,8 @@ function log_session_id(session_id,page_id, req, query) {
    city = ""
   }
 
-  url = query['site_URL']
-  extra = query['extra']
+  url = query['siteURL']
+  extra = query['extraData']
 
 
   query_str = ("INSERT INTO page_sessions_link "+
@@ -166,9 +166,9 @@ function update_session_time(req) {
      console.log(str)
      query = JSON.parse(str)
   }
-  session_id=query['session_id']
-  time_active=query['time_active']
-	 console.log(session_id)
+  session_id=query['sessionID']
+  time_active=query['timeActive']
+	console.log(session_id)
 
   query_str = "UPDATE page_sessions_link SET session_updated=now(), active_time={1} WHERE session_id=\'{0}\'".format(session_id,time_active)
   console.log(query_str)
