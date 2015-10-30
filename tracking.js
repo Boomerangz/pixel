@@ -75,7 +75,7 @@ function get_iframe(req, res) {
 
 
    page_id = req.params.id
-   str = req.query.xtra
+   str = req.query.data
    query = {}
    if (str!=undefined)
    {
@@ -104,12 +104,9 @@ function get_iframe(req, res) {
 
 
 function session_time(req, res) {
-	session_id=req.query.session_id
-  time_active=req.query.time_active
-	console.log(session_id)
 	res.end("")
 
-  async(function(){update_session_time(session_id,Date.now(),time_active)})
+  async(function(){update_session_time(req)})
 }
 
 function get_start_js(req, res) {
@@ -149,7 +146,7 @@ function log_session_id(session_id,page_id, req, query) {
   }
 
   url = query['site_URL']
-  extra = query['data']
+  extra = query['extra']
 
 
   query_str = ("INSERT INTO page_sessions_link "+
@@ -160,7 +157,19 @@ function log_session_id(session_id,page_id, req, query) {
   executeSafe(query_str);
 }
 
-function update_session_time(session_id, time) {
+function update_session_time(req) {
+  str = req.query.data
+  query = {}
+  if (str!=undefined)
+  {
+     str = new Buffer(str, 'base64').toString('utf8')
+     console.log(str)
+     query = JSON.parse(str)
+  }
+  session_id=query['session_id']
+  time_active=query['time_active']
+	 console.log(session_id)
+
   query_str = "UPDATE page_sessions_link SET session_updated=now(), active_time={1} WHERE session_id=\'{0}\'".format(session_id,time_active)
   console.log(query_str)
   executeSafe(query_str);
