@@ -113,16 +113,22 @@ function log_session_id(session_id,page_id, req) {
   var geo = geoip.lookup(ip_adr);
 
   try {
-  country = geo['country']
-  city = geo['city']
+   country = geo['country']
+   city = geo['city']
   } catch (ex) {
-  country = ""
-  city = ""
+   country = ""
+   city = ""
   }
 
   str = req.query.xtra
-  str = new Buffer(str, 'base64').toString('utf8')
-  query = JSON.parse(str)
+  if (xtra!=undefined)
+  {
+   str = new Buffer(str, 'base64').toString('utf8')
+   query = JSON.parse(str)
+  } else {
+   xtra = {}
+  }
+
 
   url = query['url']
 
