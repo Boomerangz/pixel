@@ -149,7 +149,7 @@ function log_session_id(session_id,page_id, req, query) {
   }
 
   url = query['site_URL']
-  extra = query['extra']
+  extra = query['data']
 
 
   query_str = ("INSERT INTO page_sessions_link "+
