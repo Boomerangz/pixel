@@ -81,6 +81,7 @@ function get_iframe(req, res) {
    {
     str = new Buffer(str, 'base64').toString('utf8')
     str = decodeURI(str)
+    console.log("IFRAME")
     console.log(str)
     try {
       query = JSON.parse(str)
