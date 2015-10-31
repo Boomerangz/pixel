@@ -153,8 +153,8 @@ function startTracking_AdvertNetwork() {
 				"timeActive": timeActive,
 				"extraData": extraData_AdvertNetwork
 			});
-			//console.log(dataToSend);
-			dataToSend = new Buffer(dataToSend).toString('base64')
+			dataToSend = Base64_AdvertNetwork.encode(dataToSend);
+			console.log(dataToSend);
 		} catch(e) {
 			dataToSend = JSON.stringify({
 				"siteID": publisherPageID_AdvertNetwork,
@@ -162,8 +162,9 @@ function startTracking_AdvertNetwork() {
 				"timeActive": timeActive,
 				"error": e.toString()
 			});
-			//console.log(dataToSend);
-			dataToSend = new Buffer(dataToSend).toString('base64')//Base64_AdvertNetwork.encode(encodeURI(dataToSend));
+			
+			dataToSend = Base64_AdvertNetwork.encode(dataToSend);
+			console.log(dataToSend);
 		}
 
 		utils_AdvertNetwork.sendRequest("http://px.adbox.kz/t/session?data=" + dataToSend);
