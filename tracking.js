@@ -80,6 +80,7 @@ function get_iframe(req, res) {
    if (str!=undefined)
    {
     str = new Buffer(str, 'base64').toString('utf8')
+    str = decodeURI(str)
     console.log(str)
     try {
       query = JSON.parse(str)
@@ -169,6 +170,7 @@ function update_session_time(req) {
   if (str!=undefined)
   {
      str = new Buffer(str, 'base64').toString('utf8')
+     str = decodeURI(str)
      console.log(str)
      query = JSON.parse(str)
   }
