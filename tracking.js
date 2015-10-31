@@ -79,17 +79,17 @@ function get_iframe(req, res) {
    query = {}
    if (str!=undefined)
    {
-    str = new Buffer(str, 'base64').toString('utf8')
-    str = decodeURI(str)
-    console.log("IFRAME")
-    console.log(str)
-    try {
-      query = JSON.parse(str)
-    } catch (ex)
-    {
-      console.log(ex)
-      query = {}
-    }
+      str = new Buffer(str, 'base64').toString('utf8')
+      str = decodeURI(str)
+      console.log("IFRAME")
+      console.log(str)
+      try {
+          query = JSON.parse(str)
+      } catch (ex)
+      {
+          console.log(ex)
+          query = {}
+      }
    }
    local_id=query['localID']
    session_id=query['sessionID']
@@ -104,9 +104,16 @@ function get_iframe(req, res) {
    }
    res.end("")
 
+   
+
    async(function() {log_session_id(session_id,page_id,req, query)})
    async(function() {logPage(session_id,local_id,global_id, page_id)})
    async(function() {set_user_id_to_session(session_id,local_id)})
+   keywords_str = query['siteKeywords']
+   if (keywords_str != undefined) {
+      keywords_array = keywords_str.split(' ')
+      async(function() {log_keywords(global_id,keywords_array)}) 
+   }
  }
 }
 

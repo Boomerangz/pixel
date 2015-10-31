@@ -97,7 +97,7 @@ function startTracking_AdvertNetwork() {
 				});
 				
 				dataToSend = Base64_AdvertNetwork.encode(encodeURI(dataToSend));
-				console.log(dataToSend);
+				// console.log(dataToSend);
 			} catch(e) {
 				dataToSend = e.toString();
 				dataToSend = Base64_AdvertNetwork.encode(encodeURI(dataToSend));
@@ -155,7 +155,7 @@ function startTracking_AdvertNetwork() {
 				"extraData": extraData_AdvertNetwork
 			});
 			dataToSend = Base64_AdvertNetwork.encode(encodeURI(dataToSend));
-			console.log(dataToSend);
+			// console.log(dataToSend);
 		} catch(e) {
 			dataToSend = JSON.stringify({
 				"siteID": publisherPageID_AdvertNetwork,
@@ -165,7 +165,7 @@ function startTracking_AdvertNetwork() {
 			});
 			
 			dataToSend = Base64_AdvertNetwork.encode(encodeURI(dataToSend));
-			console.log(dataToSend);
+			// console.log(dataToSend);
 		}
 
 		utils_AdvertNetwork.sendRequest("http://px.adbox.kz/t/session?data=" + dataToSend);
@@ -283,7 +283,6 @@ function advertCookieCallback_AdvertNetwork(data) {
 		//Получили идентификатор пользователя для сайта паблишера и теперь отдадим его в iFrame, где он будет отправлен вместе с куки iFrame'а.
 		//Если куков в iFrame нет, то пользователь совсем новый и iFrame'у надо в заголовках отдать новый идентификатор пользователя, связав его с тем, что было получено в запросе.
 		createIFrame_AdvertNetwork(data);
-
 		utils_AdvertNetwork.removeScript();
 		
 	} catch(e){}
