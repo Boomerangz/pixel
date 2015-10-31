@@ -154,12 +154,14 @@ function log_session_id(session_id,page_id, req, query) {
 
   url = query['siteURL']
   extra = query['extraData']
+  lang = query['pageLang']
+  title = query['siteTitle']
 
 
   query_str = ("INSERT INTO page_sessions_link "+
-  "(page_unique_code,session_id,os, os_version, browser, browser_version, country, city, ip, url) "+
-  "SELECT \'{0}\',\'{1}\',\'{2}\',\'{3}\',\'{4}\',\'{5}\',\'{6}\',\'{7}\', \'{8}\', \'{9}\' "+
-  "WHERE NOT EXISTS (SELECT id FROM page_sessions_link WHERE session_id=\'{1}\')").format(page_id,session_id,os,os_version,browser,browser_version,country,city, ip_adr, url)
+  "(page_unique_code,session_id,os, os_version, browser, browser_version, country, city, ip, url, page_lang, page_title) "+
+  "SELECT \'{0}\',\'{1}\',\'{2}\',\'{3}\',\'{4}\',\'{5}\',\'{6}\',\'{7}\', \'{8}\', \'{9}\', \'{10}\', \'{11}\' "+
+  "WHERE NOT EXISTS (SELECT id FROM page_sessions_link WHERE session_id=\'{1}\')").format(page_id,session_id,os,os_version,browser,browser_version,country,city, ip_adr, url, lang, title)
   console.log(query_str)
   executeSafe(query_str);
 }
