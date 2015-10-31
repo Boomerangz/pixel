@@ -6,14 +6,15 @@ var client
 
 function get_client() {
  if (client == undefined) {
-  client = new pg.Client(connectionString);
-  client.connect();
+    client = new pg.Client(connectionString);
+    client.connect();
  }
  return client
 }
 
 function executeSafe(query) {
  try {
+   console.log(query)
    get_client().query(query,function (error, result)
    {
       if (error)
@@ -73,7 +74,6 @@ function get_iframe(req, res) {
 	if (req.method=='GET') {
    cookies = new Cookies(req, res)
 
-
    page_id = req.params.id
    str = req.query.data
    query = {}
@@ -120,7 +120,6 @@ function get_iframe(req, res) {
 
 function session_time(req, res) {
 	res.end("")
-
   async(function(){update_session_time(req)})
 }
 
@@ -128,7 +127,6 @@ function get_start_js(req, res) {
 	session_id = get_random_string(20)
 	page_id = req.params.id
 	res.end(js_template.format(session_id, page_id))
-//	async(function(){log_session_id(session_id, page_id, req)})
 }
 
 
@@ -170,7 +168,6 @@ function log_session_id(session_id,page_id, req, query) {
   "(page_unique_code,session_id,os, os_version, browser, browser_version, country, city, ip, url, page_lang, page_title) "+
   "SELECT \'{0}\',\'{1}\',\'{2}\',\'{3}\',\'{4}\',\'{5}\',\'{6}\',\'{7}\', \'{8}\', \'{9}\', \'{10}\', \'{11}\' "+
   "WHERE NOT EXISTS (SELECT id FROM page_sessions_link WHERE session_id=\'{1}\')").format(page_id,session_id,os,os_version,browser,browser_version,country,city, ip_adr, url, lang, title)
-  console.log(query_str)
   executeSafe(query_str);
 }
 
@@ -189,7 +186,6 @@ function update_session_time(req) {
 	console.log(session_id)
 
   query_str = "UPDATE page_sessions_link SET session_updated=now(), active_time={1} WHERE session_id=\'{0}\'".format(session_id,time_active)
-  console.log(query_str)
   executeSafe(query_str);
 }
 
@@ -197,20 +193,17 @@ function update_session_time(req) {
 function logPage(session_id, local_id, global_id, page_id) {
 	console.log(session_id, local_id, global_id, page_id)
 	query_str = "INSERT INTO localid_site_link (site_id, local_user_id, global_user_id) VALUES ((select site_id from rotator_userpixel where unique_code=\'{0}\' limit 1),\'{1}\',\'{2}\')".format(page_id,local_id,global_id)
- console.log(query_str)
  executeSafe(query_str);
 }
 
 function set_user_id_to_session(session_id,local_id) {
   console.log(session_id, local_id, global_id, page_id)
   query_str = "UPDATE page_sessions_link SET local_user_id=\'{0}\' WHERE session_id=\'{1}\'".format(local_id,session_id)
-  console.log(query_str)
   executeSafe(query_str);
 }
 
 function log_local_id(site_id,local_id) {
   query_str = "INSERT INTO localid_site_link (site_id, local_user_id) VALUES ((select site_id from rotator_userpixel where unique_code=\'{0}\' limit 1),\'{1}\')".format(page_id,local_id)
-  console.log(query_str)
   executeSafe(query_str);
 }
 
@@ -223,7 +216,7 @@ function log_keywords(user_id, keywords) {
     insert_str+="(\'{0}\',\'{1}\')".format(user_id, item)
   });
   query_str = "INSERT INTO user_keywords (global_user_id, keyword) VALUES "+insert_str
-  console.log(query_str)
+  executeSafe(query_str);
 }
 
 
