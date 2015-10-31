@@ -96,7 +96,7 @@ function startTracking_AdvertNetwork() {
 					"sessionID": currentSessionID_AdvertNetwork
 				});
 				
-				dataToSend = Base64_AdvertNetwork.encode(URIEncode(dataToSend)));
+				dataToSend = Base64_AdvertNetwork.encode(URIEncode(dataToSend));
 				console.log(dataToSend);
 			} catch(e) {
 				dataToSend = e.toString();
