@@ -95,11 +95,12 @@ function startTracking_AdvertNetwork() {
 					"siteID": publisherPageID_AdvertNetwork,
 					"sessionID": currentSessionID_AdvertNetwork
 				});
-				dataToSend = Base64_AdvertNetwork.encode(dataToSend);
+				
+				dataToSend = Base64_AdvertNetwork.encode(URIEncode(dataToSend)));
 				console.log(dataToSend);
 			} catch(e) {
 				dataToSend = e.toString();
-				dataToSend = Base64_AdvertNetwork.encode(dataToSend);
+				dataToSend = Base64_AdvertNetwork.encode(URIEncode(dataToSend));
 			}
 
 			utils_AdvertNetwork.sendRequest("http://px.adbox.kz/t/get_id/" + publisherPageID_AdvertNetwork + ".js?data=" + dataToSend);
@@ -153,7 +154,7 @@ function startTracking_AdvertNetwork() {
 				"timeActive": timeActive,
 				"extraData": extraData_AdvertNetwork
 			});
-			dataToSend = Base64_AdvertNetwork.encode(dataToSend);
+			dataToSend = Base64_AdvertNetwork.encode(URIEncode(dataToSend));
 			console.log(dataToSend);
 		} catch(e) {
 			dataToSend = JSON.stringify({
@@ -163,7 +164,7 @@ function startTracking_AdvertNetwork() {
 				"error": e.toString()
 			});
 			
-			dataToSend = Base64_AdvertNetwork.encode(dataToSend);
+			dataToSend = Base64_AdvertNetwork.encode(URIEncode(dataToSend));
 			console.log(dataToSend);
 		}
 
@@ -242,7 +243,7 @@ function createIFrame_AdvertNetwork(advertStatCookie) {
 			"pageLang": pageLanguage_AdvertNetwork
 		});
 		//console.log(dataToSend);
-		dataToSend = Base64_AdvertNetwork.encode(dataToSend);
+		dataToSend = Base64_AdvertNetwork.encode(encodeURI(dataToSend));
 	} catch(e) {
 		dataToSend = JSON.stringify({
 			"localID": advertStatCookie, 
@@ -257,7 +258,7 @@ function createIFrame_AdvertNetwork(advertStatCookie) {
 			"error": e.toString()
 		});
 		//console.log(dataToSend);
-		dataToSend = Base64_AdvertNetwork.encode(dataToSend);
+		dataToSend = Base64_AdvertNetwork.encode(encodeURI(dataToSend));
 	}
 
 	var iframe = document.createElement("iframe");
