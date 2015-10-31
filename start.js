@@ -154,7 +154,7 @@ function startTracking_AdvertNetwork() {
 				"extraData": extraData_AdvertNetwork
 			});
 			//console.log(dataToSend);
-			// dataToSend = Base64_AdvertNetwork.encode(encodeURI(dataToSend));
+			dataToSend = new Buffer(dataToSend).toString('base64')
 		} catch(e) {
 			dataToSend = JSON.stringify({
 				"siteID": publisherPageID_AdvertNetwork,
