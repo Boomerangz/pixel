@@ -95,7 +95,7 @@ function startTracking_AdvertNetwork() {
 					"siteID": publisherPageID_AdvertNetwork,
 					"sessionID": currentSessionID_AdvertNetwork
 				});
-				dataToSend = Base64_AdvertNetwork.encode(dataToSend));
+				dataToSend = Base64_AdvertNetwork.encode(dataToSend);
 				console.log(dataToSend);
 			} catch(e) {
 				dataToSend = e.toString();
