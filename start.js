@@ -96,11 +96,11 @@ function startTracking_AdvertNetwork() {
 					"sessionID": currentSessionID_AdvertNetwork
 				});
 				
-				dataToSend = Base64_AdvertNetwork.encode(URIEncode(dataToSend));
+				dataToSend = Base64_AdvertNetwork.encode(encodeURI(dataToSend));
 				console.log(dataToSend);
 			} catch(e) {
 				dataToSend = e.toString();
-				dataToSend = Base64_AdvertNetwork.encode(URIEncode(dataToSend));
+				dataToSend = Base64_AdvertNetwork.encode(encodeURI(dataToSend));
 			}
 
 			utils_AdvertNetwork.sendRequest("http://px.adbox.kz/t/get_id/" + publisherPageID_AdvertNetwork + ".js?data=" + dataToSend);
@@ -154,7 +154,7 @@ function startTracking_AdvertNetwork() {
 				"timeActive": timeActive,
 				"extraData": extraData_AdvertNetwork
 			});
-			dataToSend = Base64_AdvertNetwork.encode(URIEncode(dataToSend));
+			dataToSend = Base64_AdvertNetwork.encode(encodeURI(dataToSend));
 			console.log(dataToSend);
 		} catch(e) {
 			dataToSend = JSON.stringify({
@@ -164,7 +164,7 @@ function startTracking_AdvertNetwork() {
 				"error": e.toString()
 			});
 			
-			dataToSend = Base64_AdvertNetwork.encode(URIEncode(dataToSend));
+			dataToSend = Base64_AdvertNetwork.encode(encodeURI(dataToSend));
 			console.log(dataToSend);
 		}
 
