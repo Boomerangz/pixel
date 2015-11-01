@@ -15,10 +15,8 @@ function get_client() {
 function executeSafe(query) {
  try {
    console.log(query)
-   get_client().query(query,function (error, result)
-   {
-      if (error)
-      {
+   get_client().query(query,function (error, result) {
+      if (error) {
           console.log(error)
       }
    })
@@ -50,7 +48,6 @@ function get_random_string(n) {
     var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
     for( var i=0; i < n; i++ )
         text += possible.charAt(Math.floor(Math.random() * possible.length));
-
     return text;
 }
 
@@ -65,7 +62,7 @@ function get_cookie(req, res) {
       local_id=get_random_string(20)
       res.end("advertCookieCallback_AdvertNetwork('{0}')".format(local_id))
       console.log('NEW LOCAL_ID',local_id)
-       async(function(){log_local_id(site_id,local_id)   })
+      async(function(){  log_local_id(site_id,local_id)  })
     }
 }
 
@@ -77,16 +74,14 @@ function get_iframe(req, res) {
    page_id = req.params.id
    str = req.query.data
    query = {}
-   if (str!=undefined)
-   {
+   if (str!=undefined)  {
       str = new Buffer(str, 'base64').toString('utf8')
       str = decodeURI(str)
       console.log("IFRAME")
       console.log(str)
       try {
           query = JSON.parse(str)
-      } catch (ex)
-      {
+      } catch (ex)  {
           console.log(ex)
           query = {}
       }
@@ -179,7 +174,12 @@ function update_session_time(req) {
      str = new Buffer(str, 'base64').toString('utf8')
      str = decodeURI(str)
      console.log(str)
-     query = JSON.parse(str)
+     try {
+       query = JSON.parse(str)
+      } catch (ex) {
+        console.log(ex)
+        query = {}
+      }
   }
   session_id=query['sessionID']
   time_active=query['timeActive']
