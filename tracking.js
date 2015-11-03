@@ -192,7 +192,7 @@ function update_session_time(req) {
 
 function logPage(session_id, local_id, global_id, page_id) {
 	console.log(session_id, local_id, global_id, page_id)
-	query_str = "INSERT INTO localid_site_link (site_id, local_user_id, global_user_id) VALUES ((select site_id from rotator_userpixel where unique_code=\'{0}\' limit 1),\'{1}\',\'{2}\')".format(page_id,local_id,global_id)
+	query_str = "INSERT INTO localid_site_link (site_id, local_user_id, global_user_id) VALUES ((select site_id from platform_userpixel where unique_code=\'{0}\' limit 1),\'{1}\',\'{2}\')".format(page_id,local_id,global_id)
  executeSafe(query_str);
 }
 
@@ -203,7 +203,7 @@ function set_user_id_to_session(session_id,local_id) {
 }
 
 function log_local_id(site_id,local_id) {
-  query_str = "INSERT INTO localid_site_link (site_id, local_user_id) VALUES ((select site_id from rotator_userpixel where unique_code=\'{0}\' limit 1),\'{1}\')".format(page_id,local_id)
+  query_str = "INSERT INTO localid_site_link (site_id, local_user_id) VALUES ((select site_id from platform_userpixel where unique_code=\'{0}\' limit 1),\'{1}\')".format(page_id,local_id)
   executeSafe(query_str);
 }
 
