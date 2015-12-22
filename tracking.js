@@ -1,29 +1,5 @@
 var path = require('path');
-var pg = require('pg');
-var connectionString = process.env.DATABASE_URL || 'postgres://postgres@px.adbox.kz:5445/postgres';
-var client
-
-
-function get_client() {
- if (client == undefined) {
-    client = new pg.Client(connectionString);
-    client.connect();
- }
- return client
-}
-
-function executeSafe(query) {
- try {
-   console.log(query)
-   get_client().query(query,function (error, result) {
-      if (error) {
-          console.log(error)
-      }
-   })
- } catch (err) {
-   console.log(err)
- }
-}
+var db = require('./db.js');
 
 
 var Cookies = require( "cookies" )
@@ -163,7 +139,7 @@ function log_session_id(session_id,page_id, req, query) {
   "(page_unique_code,session_id,os, os_version, browser, browser_version, country, city, ip, url, page_lang, page_title) "+
   "SELECT \'{0}\',\'{1}\',\'{2}\',\'{3}\',\'{4}\',\'{5}\',\'{6}\',\'{7}\', \'{8}\', \'{9}\', \'{10}\', \'{11}\' "+
   "WHERE NOT EXISTS (SELECT id FROM page_sessions_link WHERE session_id=\'{1}\')").format(page_id,session_id,os,os_version,browser,browser_version,country,city, ip_adr, url, lang, title)
-  executeSafe(query_str);
+  db.execute_safe(query_str);
 }
 
 function update_session_time(req) {
@@ -186,25 +162,25 @@ function update_session_time(req) {
 	console.log(session_id)
 
   query_str = "UPDATE page_sessions_link SET session_updated=now(), active_time={1} WHERE session_id=\'{0}\'".format(session_id,time_active)
-  executeSafe(query_str);
+  db.execute_safe(query_str);
 }
 
 
 function logPage(session_id, local_id, global_id, page_id) {
 	console.log(session_id, local_id, global_id, page_id)
 	query_str = "INSERT INTO localid_site_link (site_id, local_user_id, global_user_id) VALUES ((select site_id from platform_userpixel where unique_code=\'{0}\' limit 1),\'{1}\',\'{2}\')".format(page_id,local_id,global_id)
- executeSafe(query_str);
+ db.execute_safe(query_str);
 }
 
 function set_user_id_to_session(session_id,local_id) {
   console.log(session_id, local_id, global_id, page_id)
   query_str = "UPDATE page_sessions_link SET local_user_id=\'{0}\' WHERE session_id=\'{1}\'".format(local_id,session_id)
-  executeSafe(query_str);
+  db.execute_safe(query_str);
 }
 
 function log_local_id(site_id,local_id) {
   query_str = "INSERT INTO localid_site_link (site_id, local_user_id) VALUES ((select site_id from platform_userpixel where unique_code=\'{0}\' limit 1),\'{1}\')".format(page_id,local_id)
-  executeSafe(query_str);
+  db.execute_safe(query_str);
 }
 
 
@@ -216,11 +192,11 @@ function log_keywords(user_id, keywords) {
     insert_str+="(\'{0}\',\'{1}\')".format(user_id, item)
   });
   query_str = "INSERT INTO user_keywords (global_user_id, keyword) VALUES "+insert_str
-  executeSafe(query_str);
+  db.execute_safe(query_str);
 }
 
 
-path_to_template=path.join(__dirname, 'start.js')
+path_to_template=path.join(__dirname, 'templates/start.js.txt')
 var fs = require('fs');
 fs.readFile(path_to_template, function (err, data) {
   if (err) {

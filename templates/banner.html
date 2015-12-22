@@ -1,9 +1,10 @@
 <div>
 	<a href="{2}">
-		<img id="banner" onload="onLoadEvent()" src='{0}'>
+		<img id="banner" src='{0}'>
 	</a>
 	<script type="text/javascript">
-		function onLoadEvent() {
+		function sendLoadSignal()
+		{
 			var xmlhttp;
 			if (window.XMLHttpRequest)
 			{// code for IE7+, Firefox, Chrome, Opera, Safari
@@ -13,8 +14,9 @@
 			{// code for IE6, IE5
 			  xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
 			}			
-			xmlhttp.open("GET","/loaded?i={1}",true);
+			xmlhttp.open("GET","{1}",true);
 			xmlhttp.send();
 		}
+		sendLoadSignal();
 	</script>
 </div>

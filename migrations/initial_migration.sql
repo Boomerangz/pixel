@@ -57,3 +57,12 @@ CREATE TABLE user_categories
   global_user_id VARCHAR(20),
   keyword VARCHAR(200)
 );
+
+
+CREATE banner_show_stats
+(
+  id SERIAL NOT NULL PRIMARY KEY,
+  created timestamp default now(),
+  banner_id int,
+  spot_code VARCHAR(30)
+);
