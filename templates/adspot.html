@@ -14,7 +14,14 @@ function loadXMLDoc() {
     xmlhttp.onreadystatechange = function() {
         if (xmlhttp.readyState == XMLHttpRequest.DONE ) {
            if(xmlhttp.status == 200){
-               document.getElementById("euph_spot").innerHTML = xmlhttp.responseText;
+            html = xmlhttp.responseText; 
+            var newElement = document.getElementById("euph_spot");
+            newElement.innerHTML = html;               
+               var scripts = newElement.getElementsByTagName("script");
+                for (var i = 0; i < scripts.length; ++i) {
+                  var script = scripts[i];
+                  eval(script.innerHTML);
+                }
            }
            else if(xmlhttp.status == 400) {
               console.log('There was an error 400')
@@ -24,7 +31,7 @@ function loadXMLDoc() {
            }
         }
     }
-    xmlhttp.open("GET", "http://127.0.0.1:8080/b/get/4E6034956816465", true);
+    xmlhttp.open("GET", "http://tr.euphorbia.co/b/get/4E6034956816465", true);
     xmlhttp.send();
 }
 loadXMLDoc()

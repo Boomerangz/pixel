@@ -1,6 +1,6 @@
 var db = require('./db.js');
 
-hostname = "http://127.0.0.1:8080/"
+hostname = "http://tr.euphorbia.co/"
 media_link = "http://euphorbia.co/media/"
 var banner_template
 
