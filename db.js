@@ -1,5 +1,5 @@
 var pg = require('pg');
-var connectionString = process.env.DATABASE_URL || 'postgres://postgres@px.adbox.kz:5445/postgres';
+var connectionString = process.env.DATABASE_URL || 'postgres://postgres@px.adbox.kz:5445/eu2';
 var client
 
 
