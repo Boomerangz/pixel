@@ -1,8 +1,10 @@
 var parser = require('ua-parser-js');
 var geoip = require('geoip-lite');
+var cookieParser = require('cookie-parser')
 
 var express = require('express')
 var app = express()
+app.use(cookieParser());
 var pg = require('pg');
 
 var tracking = require('./tracking.js');
@@ -17,6 +19,8 @@ app.get('/t/session/', tracking.session_time)
 app.get('/b/get/:id([A-Z0-9]+)', rotator.get_banner)
 app.get('/b/link', rotator.redirect_link)
 app.get('/b/loaded', rotator.banner_loaded)
+
+
 
 function startServer() {
   var server = app.listen(8080)  

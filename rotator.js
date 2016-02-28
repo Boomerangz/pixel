@@ -32,7 +32,7 @@ function async(func) {
 }
 
 function get_banner(req, res) {
-	res.writeHead(200, {'Content-Type': 'text/html'});
+ 	res.writeHead(200, {'Content-Type': 'text/html'});
   	spot_id = req.params.id
   	console.log(spot_id)
 	db.get_client().query(("SELECT pb.id, pb.image, pb.url FROM "+
@@ -76,6 +76,13 @@ function get_banner(req, res) {
 
 function redirect_link(req, res) {
   console.log(redirect_link)
+  var user_id
+    if (req.cookies.euph_id) {
+      user_id = req.cookies.euph_id
+    } else {
+      user_id = get_random_string(30)
+      res.cookie('euph_id', user_id, { maxAge: 900000, httpOnly: true });
+    } 
   l_id = req.query.l
   link_record=link_map[l_id]
   link = link_record['url']
@@ -88,9 +95,9 @@ function redirect_link(req, res) {
                 'Location': link
               });
     res.end();
+    setTimeout(function() {delete link_map[l_id];},3600*1000)
     async(function() {
-                delete link_map[l_id];
-                query = 'INSERT INTO banner_clicks (banner_id,spot_code) VALUES ({0},\'{1}\')'.format(banner_id,spot_id)
+                query = 'INSERT INTO banner_clicks (banner_id,spot_code,user_id) VALUES ({0},\'{1}\',\'{2}\')'.format(banner_id,spot_id,user_id)
                 db.execute_safe(query)
               })
   } else {
@@ -102,6 +109,13 @@ function redirect_link(req, res) {
 }
 
 function banner_loaded(req, res) {
+    var user_id
+    if (req.cookies.euph_id) {
+      user_id = req.cookies.euph_id
+    } else {
+      user_id = get_random_string(30)
+      res.cookie('euph_id', user_id, { maxAge: 900000, httpOnly: true });
+    } 
     res.end("");
     banner_id = req.query.i
     console.log("banner {0} loaded".format(banner_id))
@@ -109,7 +123,7 @@ function banner_loaded(req, res) {
         var now = new Date();
         banner_id = req.query.i
         spot_id = req.query.s
-        query = 'INSERT INTO banner_show_stats (banner_id,spot_code) VALUES ({0},\'{1}\')'.format(banner_id,spot_id)
+        query = 'INSERT INTO banner_show_stats (banner_id,spot_code, user_id) VALUES ({0},\'{1}\',\'{2}\')'.format(banner_id,spot_id,user_id)
         db.execute_safe(query);
         console.log("banner {0} writed to log".format(banner_id))
       });
